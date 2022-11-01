@@ -51,7 +51,7 @@ const generateNextState = (currentState) => {
   return backToNested(nextMatrix);
 };
 function App() {
-  const count = React.useRef(0);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const [tileMatrix, setTileMatrix] = React.useState(
     new Array(CUBE_OF_TILES)
@@ -70,11 +70,10 @@ function App() {
     let NextTileMatrix = [...tileMatrix];
     initialTiles.forEach((tile) => (NextTileMatrix[tile.y][tile.x] = 1));
     setTileMatrix(NextTileMatrix);
-  }, []);
+  }, [initialTiles]);
 
   React.useEffect(() => {
     let nextState = generateNextState(tileMatrix);
-    count.current += 1;
     setTimeout(() => setTileMatrix(nextState), 1000);
   }, [tileMatrix]);
 
@@ -82,9 +81,16 @@ function App() {
     const generateRow = (yPosition) =>
       new Array(CUBE_OF_TILES).fill("").map((__, index) => (
         <div
+          disabled={isPlaying}
+          onClick={() =>
+            !isPlaying
+              ? setInitialTiles((prev) => [...prev, { x: index, y: yPosition }])
+              : null
+          }
           className={`Tile ${
-            isAlive({ x: index, y: yPosition }) ? "Alive" : ""
-          }`}
+            isAlive({ x: index, y: yPosition }) && isPlaying ? "Alive" : ""
+          }
+          ${isAlive({ x: index, y: yPosition }) && !isPlaying ? "Chosen" : ""}`}
           key={`${index}-${yPosition}`}
         >
           {index}
@@ -105,11 +111,10 @@ function App() {
   return (
     <div className="App">
       <div>
-        <h1>tile clicked {JSON.stringify(initialTiles)}</h1>
-        <label htmlFor="intialStart">Intial starting cells</label>
-        <input></input>
+        <button onClick={() => setIsPlaying((prev) => !prev)}>
+          {isPlaying ? "choose new tiles" : "choose tiles"}
+        </button>
       </div>
-
       {TILE_GRID}
     </div>
   );
