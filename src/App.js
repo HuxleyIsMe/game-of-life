@@ -62,6 +62,9 @@ function App() {
     { x: 3, y: 3 },
     { x: 4, y: 3 },
     { x: 5, y: 3 },
+    // { x: 5, y: 0 },
+    // { x: 5, y: 8 },
+    // { x: 5, y: 9 },
   ]);
 
   const isAlive = (coords) => !!tileMatrix[coords.y][coords.x];
