@@ -1,24 +1,3 @@
-.TileGrid {
-  width: 600px;
-  height: 600px;
-  background: pink;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.Tile {
-  background: white;
-  height: 60px;
-  width: 60px;
-}
-
-.Alive {
-  background: pink;
-}
-
 .Chosen {
   background: blue;
 }
