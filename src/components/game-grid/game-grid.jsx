@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNextState } from "./game-grid.utils";
+import { generateNextState } from "./game-grid-loop.js";
 import "./game-grid.css";
 
 export const GameGrid = ({ startingTiles, cubeSize }) => {
