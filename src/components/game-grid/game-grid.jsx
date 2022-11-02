@@ -5,6 +5,11 @@ import "./game-grid.css";
 export const GameGrid = ({ startingTiles, cubeSize }) => {
   const [tileMatrix, setTileMatrix] = React.useState(startingTiles);
 
+  const cubeSizeAsArray = React.useMemo(
+    () => new Array(cubeSize).fill(""),
+    [cubeSize]
+  );
+
   React.useEffect(() => {
     setTimeout(
       () => setTileMatrix(generateNextState(tileMatrix, cubeSize)),
@@ -16,7 +21,7 @@ export const GameGrid = ({ startingTiles, cubeSize }) => {
 
   const TILE_GRID = React.useMemo(() => {
     const generateRow = (yPosition) =>
-      new Array(cubeSize).fill("").map((__, index) => (
+      cubeSizeAsArray.map((__, index) => (
         <div
           className={`Tile ${
             isAlive({ x: index, y: yPosition }) ? "Alive" : ""
@@ -41,7 +46,7 @@ export const GameGrid = ({ startingTiles, cubeSize }) => {
 
     return (
       <div className="TileGrid">
-        {new Array(cubeSize).fill("").map((__, index) => (
+        {cubeSizeAsArray.map((__, index) => (
           <div className="row" key={`row-${index}`}>
             {generateRow(index)}
           </div>
